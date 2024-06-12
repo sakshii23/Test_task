@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <h2>Total Balance: {{ total_balance }}</h2>
+    <h3>Total You Owe: {{ total_owes }}</h3>
+    <h3>Total You Are Owed: {{ total_owed }}</h3>
+
+    <h2>Expenses You Paid</h2>
+    <ul>
+        {% for expense in expenses_paid %}
+            <li>
+                {{ expense.date }}: {{ expense.description }} - {{ expense.amount }}
+                <ul>
+                    {% for split in expense.splits.all %}
+                        <li>{{ split.user }} owes {{ split.amount }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Expenses You Are Part Of</h2>
+    <ul>
+        {% for split in expenses_split %}
+            <li>
+                {{ split.expense.date }}: {{ split.expense.description }} - You owe {{ split.amount }} to {{ split.expense.payer }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

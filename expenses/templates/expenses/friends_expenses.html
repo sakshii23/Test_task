@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ friend.username }}'s Expenses</title>
+</head>
+<body>
+    <h1>{{ friend.username }}'s Expenses</h1>
+
+    <h2>Expenses Paid by {{ friend.username }}</h2>
+    <ul>
+        {% for expense in expenses_paid %}
+            <li>
+                {{ expense.date }}: {{ expense.description }} - {{ expense.amount }}
+                <ul>
+                    {% for split in expense.splits.all %}
+                        <li>{{ split.user }} owes {{ split.amount }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Expenses {{ friend.username }} Is Part Of</h2>
+    <ul>
+        {% for split in expenses_split %}
+            <li>
+                {{ split.expense.date }}: {{ split.expense.description }} - {{ friend.username }} owes {{ split.amount }} to {{ split.expense.payer }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
